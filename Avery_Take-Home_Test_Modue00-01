@@ -1,0 +1,93 @@
+1.  Understanding the Internet’s Evolution and Its Impact
+
+Can you explain how **openness** and **standardization** (e.g., the adoption of TCP/IP, DNS) continue to shape decisions you make when building or consuming REST APIs in Django or any other framework?”
+
+Openness continues to shape decisions I make when building REST APIs in Django or other frameworks by ensuring my code is well documented and easy to follow, read, and execute. Doing so, makes it eaasier for others in the coding community to improve my code, and subsequently contribute to the open community. There is also the comfort of knowing some of the issues I face today have gone back to the days of ARPANET (government internet from the 1960s).
+
+When utilizing REST APIs in other frameworks, I believe it is good practice to test the code sufficiently before pushing the code to production. I also, believe I am responsible for improving the code when possible to contribute to the community and my fellow programmers.
+
+Being aware of industry standardization is crucial because it provides a guideline for writing code. Adhering to industry standardization, like TCP/IP and DNS, makes it easier for me and others to troubleshoot code. Writing code with standardization in mind makes sure everyone is on the same page. This makes sure my code can easily be understood, debugged, and improved by others.
+
+2. OSI Model in Troubleshooting
+
+Imagine you have a Django-based service deployed in the cloud, and users occasionally can’t reach your API endpoint. If you were asked to pinpoint potential issues using the OSI model, how would you methodically approach diagnosing where the failure might lie?”
+
+This sounds like a network issue, so I would focus on the network layer to troubleshoot the issue. I woulld ask the user questions like: Can you ping my IP address. Are there any packets lost when pinging my IP. DNS: Can you ping my fully qualified domain name. Can you ping the default gateway.
+
+If the problem is not identified by focusing on the network layer, I might start with the physical layer and work my way up the OSI model. Is the network cable plugged-in. Is there a link light on the switch and NIC card. Is the appropriate network port open. Are cookies enabled in their browser. Do you experience the same issue using multiple browsers. Did you receive any error codes when the failure occurred. Is your connection to my server secure. In other words, does you url include https instead of http.
+
+3. HTTP vs. HTTPS and Status Codes
+
+A major part of backend work is securing APIs and sending back proper HTTP status codes. In Django REST Framework, how would you ensure HTTPS is enforced, and how would you decide which HTTP status code to return for each of the following situations:
+
+HTTPS can be enforced by using an SSL cert on the web server and automating https on urls.
+
+> 1. A newly created resource.
+>    HTTPS status code for a newly created resource is 201.
+
+> 2. An invalid request payload from the client.
+>    HTTPS status code for an invalid request payload is 400.
+
+> 3. Server-side failure you can’t fully disclose.
+>    HTTPS status code for server-side failure you can't fully disclose is 500.
+
+> 4. A request to partially modify a resource?”
+>    HTTPS status code for partially modify a resource is 206.
+
+4. DevOps Principles in a Backend Python Workflow
+
+Describe a scenario in which having a CI/CD pipeline (with Docker images for your Django app) and collaborative DevOps practices drastically reduces deployment downtime. What specific steps or tools might you use to automate testing and deployment for a Python-based backend?
+
+One scenario would involve setting up two identical environments, dev and production. Updates can be deployed to the dev environment while production environment stays online. Once testing is complete, transitioning users to the dev environment by switching load balancer traffic. The new dev environment becomes the new production environment. This method eliminates downtime and speeds up deployment.
+
+Kubernetes can be used to automate testing and deployment for a Python-based backend.
+
+5. Python 2 vs. Python 3: Practical Differences\*\*
+
+Python 2 has been retired, but sometimes we still encounter legacy code. Can you name two Python 3 features that break backward compatibility with Python 2, and provide a brief code snippet illustrating a scenario that would fail on Python 2 but succeed on Python 3?
+
+Print breaks backward compatibilty with Python 2. Print in Python 3 is a function that requires parenthesis and the string you want to print. In Python 2 print is a statement used without parentheses. print("Eagles Rock!") will not work on Python 2, but works in Python 3.
+
+In Python 3 the / operator performs floating-point division, while in Python 2 peforms integer division. // is used to perform integer division in Python 3.
+
+6. The GIL and Its Implications
+
+In your experience, how does Python’s Global Interpreter Lock (GIL) affect your approach to writing concurrent or parallel code for CPU-bound tasks in a Django backend? Can you give an example where the GIL might not pose a performance issue, and another scenario where you’d work around it?
+
+GIL is a lock that allows one thread to control the Python interpreter at a time. Therefore, GIL can be a bottleneck in CPU-bound and multi-threaded CPU-bound code. GIL does not have much impact on the performance of I/O-bound concurrency because the lock is shared while waiting for I/O. CPU-bound concurrency, on the other hand, would become single-threaded. GIL does not pose performance issue on single-threaded code, therefore I would probably avoid CPU-bound multi-threading whenever possible. I would work around the performance limitations of GIL by utilizing multi-processing. One could also use other Python interpreters, like CPython, PyPY, or asyncio. Asyncio utilizes the wait or yield method to increase performance.
+
+7. Packaging Python Applications and Dependencies
+
+Your Django REST Framework project relies on a few external libraries (e.g., `requests`, `psycopg2`). What are some best practices for managing dependencies in Python, and how would you ensure the same environment is replicated in production or in Docker containers?
+
+Some best practices for managing depenencies in Python include using virtual environments. python -m venv /your_path can be used to create a virtual envinonment. You can use a requirements.txt file to list dependencies and different version numbers. Poetry can be used aas a dependency management tool.
+
+8. Code Review Exercise: Whitespace and Indentation Errors
+
+Look at the following code snippet. It’s meant to iterate over a list of numbers, print all even ones, and stop printing as soon as it hits a number greater than 10. Identify any indentation or logic issues and provide a corrected version.”
+
+```python
+def print_evens_stop(numbers):
+    for n in numbers:
+        if n % 2 == 0:
+            print(n)
+        if n > 10:
+            break
+            print("Done")
+```
+
+9. Basic Python Error Handling and File I/O
+
+You have a function in Python that reads configuration data from a file and returns it as a dictionary. How would you handle file-not-found errors gracefully, and what Python language features make it easy to ensure that files are always closed properly?
+
+You can use try/except. The try block can attempt to read the configuration data and the except block can return 'File Not Found' if the file does not exist. dict = {} can be used to create an empty dictionary.
+
+The Python feature that ensures that files are closed properly is the with statement. with open('text_file.txt', 'r') as f:
+
+10. Realistic Scenario: Deploying a Small DRF Project
+
+You’ve built a minimal Django REST Framework API locally. Now you want to containerize it using Docker and eventually deploy it on a Kubernetes cluster. Could you walk me through the essential steps from creating a Dockerfile to setting up a simple Deployment on Kubernetes? Focus on how you handle environment variables (like DB credentials) and mention any considerations from Module 00 about ensuring high availability.
+
+To containerize your API create a Dockerfile. Copy the project files into the container's path. Build the Docker image with "docker build". Start the Docker container with "docker run". View the application at http://localhost:8000.
+
+For Kubernetes, create a YAML file. This file can contain text such as FROM -> Python 3.9. COPY -> Copies the requirements.txt file into the container. Also include HTTPS protocol for readiness and liveness probes to setup health checks. Create a secret to store credentials. Use "kubectl" command to create a Secret. Replicate the service using kubectl. Deploy and check the app using "kubectl apply -f bb.yaml". Verify the deployment, "kuberctl get deployments". Check kubrernete services, "kuberctl get services". Open a browser and test by going to localhost:30001.
