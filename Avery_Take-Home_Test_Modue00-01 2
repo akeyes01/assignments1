@@ -1,0 +1,61 @@
+1.  Understanding the Internet’s Evolution and Its Impact
+
+Can you explain how **openness** and **standardization** (e.g., the adoption of TCP/IP, DNS) continue to shape decisions you make when building or consuming REST APIs in Django or any other framework?”
+
+Openness continues to shape decisions I make when building REST APIs in Django or other frameworks by ensuring my code is well documented and easy to follow, read, and execute. Doing so, makes it eaasier for others in the coding community to improve my code, and subsequently contribute to the open community. There is also the comfort of knowing some of the issues I face today have gone back to the days of ARPANET (government internet from the 1960s).
+
+When utilizing REST APIs in other frameworks, I believe it is good practice to test the code sufficiently before pushing the code to production. I also, believe I am responsible for improving the code when possible to contribute to the community and my fellow programmers.
+
+Being aware of industry standardization is crucial because it provides a guideline for writing code. Adhering to industry standardization, like TCP/IP and DNS, makes it easier for me and others to troubleshoot code. Writing code with standardization in mind makes sure everyone is on the same page. This makes sure my code can easily be understood, debugged, and improved by others.
+
+2. OSI Model in Troubleshooting
+
+Imagine you have a Django-based service deployed in the cloud, and users occasionally can’t reach your API endpoint. If you were asked to pinpoint potential issues using the OSI model, how would you methodically approach diagnosing where the failure might lie?”
+
+This sounds like a network issue, so I would focus on the network layer to troubleshoot the issue. I woulld ask the user questions like: Can you ping my IP address. Are there any packets lost when pinging my IP. DNS: Can you ping my fully qualified domain name. Can you ping the default gateway.
+
+If the problem is not identified by focusing on the network layer, I might start with the physical layer and work my way up the OSI model. Is the network cable plugged-in. Is there a link light on the switch and NIC card. Is the appropriate network port open. Are cookies enabled in their browser. Do you experience the same issue using multiple browsers. Did you receive any error codes when the failure occurred. Is your connection to my server secure. In other words, does you url include https instead of http.
+
+3. HTTP vs. HTTPS and Status Codes
+
+A major part of backend work is securing APIs and sending back proper HTTP status codes. In Django REST Framework, how would you ensure HTTPS is enforced, and how would you decide which HTTP status code to return for each of the following situations:
+
+HTTPS can be enforced by using an SSL cert on the web server and automating https on urls.
+
+> 1. A newly created resource.
+>    HTTPS status code for a newly created resource is 201.
+
+> 2. An invalid request payload from the client.
+>    HTTPS status code for an invalid request payload is 400.
+
+> 3. Server-side failure you can’t fully disclose.
+>    HTTPS status code for server-side failure you can't fully disclose is 500.
+
+> 4. A request to partially modify a resource?”
+>    HTTPS status code for partially modify a resource is 206.
+
+4. DevOps Principles in a Backend Python Workflow
+
+Describe a scenario in which having a CI/CD pipeline (with Docker images for your Django app) and collaborative DevOps practices drastically reduces deployment downtime. What specific steps or tools might you use to automate testing and deployment for a Python-based backend?
+
+One scenario would involve setting up two identical environments, dev and production. Updates can be deployed to the dev environment while production environment stays online. Once testing is complete, transitioning users to the dev environment by switching load balancer traffic. The new dev environment becomes the new production environment. This method eliminates downtime and speeds up deployment.
+
+Kubernetes can be used to automate testing and deployment for a Python-based backend.
+
+5. Python 2 vs. Python 3: Practical Differences\*\*
+
+Python 2 has been retired, but sometimes we still encounter legacy code. Can you name two Python 3 features that break backward compatibility with Python 2, and provide a brief code snippet illustrating a scenario that would fail on Python 2 but succeed on Python 3?
+
+Print breaks backward compatibilty with Python 2. Print in Python 3 is a function that requires parenthesis and the string you want to print. In Python 2 print is a statement used without parentheses. print("Eagles Rock!") will not work on Python 2, but works in Python 3.
+
+In Python 3 the / operator performs floating-point division, while in Python 2 peforms integer division. // is used to perform integer division in Python 3.
+
+6. The GIL and Its Implications
+
+In your experience, how does Python’s Global Interpreter Lock (GIL) affect your approach to writing concurrent or parallel code for CPU-bound tasks in a Django backend? Can you give an example where the GIL might not pose a performance issue, and another scenario where you’d work around it?
+
+**Key Concepts to Address:**
+
+- GIL’s effect on multi-threaded CPU-bound code.
+- I/O-bound concurrency vs. CPU-bound concurrency.
+- Potential solutions: `multiprocessing`, using native extensions (NumPy), or using an asynchronous approach (`asyncio`).
